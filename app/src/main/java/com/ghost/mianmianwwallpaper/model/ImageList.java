@@ -4,6 +4,7 @@ import com.ghost.mianmianwwallpaper.api.ImageApi;
 import com.ghost.mianmianwwallpaper.commen.GsonUtils;
 import com.ghost.mianmianwwallpaper.entity.ImageEntity;
 import com.ghost.mianmianwwallpaper.interfaces.ImageListCallback;
+import com.ghost.mianmianwwallpaper.interfaces.NetWorkErrorCallback;
 import com.ghost.mianmianwwallpaper.interfaces.ResponseCallback;
 
 /**
@@ -12,6 +13,7 @@ import com.ghost.mianmianwwallpaper.interfaces.ResponseCallback;
 
 public class ImageList {
     private ImageListCallback mImageListCallback;
+    private NetWorkErrorCallback netWorkErrorCallback;
     public void getImageList(String page, String tag, String tag2){
         ImageApi.getImageListService(page, tag, tag2, new ResponseCallback<String>() {
             @Override
@@ -24,12 +26,16 @@ public class ImageList {
 
             @Override
             public void onFail(int error) {
-
+                netWorkErrorCallback.onNetQorkError();
             }
         });
     }
 
     public void setmImageListCallback(ImageListCallback mImageListCallback) {
         this.mImageListCallback = mImageListCallback;
+    }
+
+    public void setNetWorkErrorCallback(NetWorkErrorCallback netWorkErrorCallback) {
+        this.netWorkErrorCallback = netWorkErrorCallback;
     }
 }

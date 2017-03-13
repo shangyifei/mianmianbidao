@@ -7,16 +7,29 @@ import android.widget.ImageView;
 
 import com.ghost.mianmianwwallpaper.BaseActivity;
 import com.ghost.mianmianwwallpaper.R;
+import com.ghost.mianmianwwallpaper.commen.ImageRequest;
+import com.ghost.mianmianwwallpaper.interfaces.ResponseCallback;
 
 public class ShowOriginalImageActivity extends BaseActivity {
     private ImageView mOriginalImage;
-    private Bitmap bitmap;
+    private String mImageUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_original_image);
         mOriginalImage = findView(R.id.iv_original_image);
-        bitmap = getIntent().getParcelableExtra("bitmap");
-        mOriginalImage.setImageBitmap(bitmap);
+        mImageUrl = getIntent().getStringExtra("image_url");
+        ImageRequest imageRequest = new ImageRequest(new ResponseCallback<Bitmap>() {
+            @Override
+            public void onSuccess(Bitmap entity) {
+                mOriginalImage.setImageBitmap(entity);
+            }
+
+            @Override
+            public void onFail(int error) {
+
+            }
+        });
+        imageRequest.downImage(mImageUrl,0,0);
     }
 }

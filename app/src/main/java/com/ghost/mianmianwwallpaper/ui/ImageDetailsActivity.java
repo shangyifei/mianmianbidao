@@ -75,23 +75,12 @@ public class ImageDetailsActivity extends BaseActivity {
             }
         });
         mDisplayImage.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                ImageRequest imageRequest = new ImageRequest(new ResponseCallback<Bitmap>() {
-                    @Override
-                    public void onSuccess(Bitmap entity) {
-                        Intent intent = new Intent(ImageDetailsActivity.this,ShowOriginalImageActivity.class);
-                        intent.putExtra("",entity);
-//                        startActivity(intent);
-
-                    }
-
-                    @Override
-                    public void onFail(int error) {
-
-                    }
-                });
-                imageRequest.downImage(mImageUrl,0,0);
+                Intent intent = new Intent(ImageDetailsActivity.this,ShowOriginalImageActivity.class);
+                intent.putExtra("image_url",mImageUrl);
+                startActivity(intent);
 
             }
         });

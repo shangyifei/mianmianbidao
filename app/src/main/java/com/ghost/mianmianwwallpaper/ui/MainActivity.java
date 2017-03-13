@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity {
 
         mBottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_amber_a700_24dp,R.string.home).setActiveColor(getResources().getColor(android.R.color.holo_orange_light)))
-                .addItem(new BottomNavigationItem(R.drawable.ic_search_orange_a700_24dp,R.string.search).setActiveColor(getResources().getColor(android.R.color.holo_orange_light)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_search_orange_a700_24dp,R.string.find).setActiveColor(getResources().getColor(android.R.color.holo_orange_light)))
                 .addItem(new BottomNavigationItem(R.drawable.ic_chrome_reader_mode_orange_a700_24dp,R.string.hotnews).setActiveColor(getResources().getColor(android.R.color.holo_orange_light)))
                 .addItem(new BottomNavigationItem(R.drawable.ic_account_circle_orange_700_24dp,R.string.personal).setActiveColor(getResources().getColor(android.R.color.holo_orange_light)))
                 .setFirstSelectedPosition(0)

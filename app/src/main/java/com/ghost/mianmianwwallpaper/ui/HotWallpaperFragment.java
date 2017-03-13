@@ -19,6 +19,7 @@ import com.ghost.mianmianwwallpaper.commen.ContentDisplayManager;
 import com.ghost.mianmianwwallpaper.configure.NetWorkConfig;
 import com.ghost.mianmianwwallpaper.entity.ImageEntity;
 import com.ghost.mianmianwwallpaper.interfaces.ImageListCallback;
+import com.ghost.mianmianwwallpaper.interfaces.NetWorkErrorCallback;
 import com.ghost.mianmianwwallpaper.model.ImageList;
 import com.ghost.mianmianwwallpaper.model.ImageListAdapter;
 
@@ -32,7 +33,7 @@ import java.util.List;
  * Use the {@link HotWallpaperFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HotWallpaperFragment extends Fragment  implements ContentDisplayManager.ContentViewAttachCallback{
+public class HotWallpaperFragment extends Fragment  implements ContentDisplayManager.ContentViewAttachCallback,NetWorkErrorCallback{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -100,6 +101,7 @@ public class HotWallpaperFragment extends Fragment  implements ContentDisplayMan
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ImageList imageList = new ImageList();
+        imageList.setNetWorkErrorCallback(this);
         imageList.setmImageListCallback(new ImageListCallback() {
             @Override
             public void haveImageList(List<ImageEntity.DataBean> imageList) {
@@ -172,5 +174,10 @@ public class HotWallpaperFragment extends Fragment  implements ContentDisplayMan
             }
         });
         recyclerView.setAdapter(imageListAdapter);
+    }
+
+    @Override
+    public void onNetQorkError() {
+        mContentDisplayManager.displayErrorView();
     }
 }

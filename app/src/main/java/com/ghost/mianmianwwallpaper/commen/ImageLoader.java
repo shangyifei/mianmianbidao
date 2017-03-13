@@ -4,20 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
-import android.provider.Settings;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 
 import com.ghost.mianmianwwallpaper.interfaces.ResponseCallback;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * Created by hello on 2017/3/11.
@@ -26,6 +19,7 @@ import java.util.TimerTask;
 public class ImageLoader {
     static ImageLoader instance;
     private Context mContext;
+    private Map<ImageView,String> mCurImageViewLoadingUrl = Collections.synchronizedMap(new WeakHashMap<ImageView,String>());
     public static synchronized ImageLoader getInstance(){
         if (instance == null){
             instance = new ImageLoader();
@@ -42,10 +36,13 @@ public class ImageLoader {
 //            return true;
 //        }
 //    });
-    public void displayImage(String url, final ImageView imageView){
+    public void displayImage(final String url, final ImageView imageView){
+        mCurImageViewLoadingUrl.put(imageView,url);
         ImageRequest imageRequest = new ImageRequest(new ResponseCallback<Bitmap>() {
             @Override
             public void onSuccess(Bitmap entity) {
+                if (mCurImageViewLoadingUrl.get(imageView)==null||!mCurImageViewLoadingUrl.get(imageView).equals(url))
+                    return;
                 imageView.setImageBitmap(entity);
 //                final Timer timer = new Timer();
 //                timer.schedule(new TimerTask() {
